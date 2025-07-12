@@ -31,7 +31,10 @@ const io = new Server(server, { cors: { origin: "*" } });
 global.io = io; // For proctoring sockets
 
 // ── Middlewares ──
-app.use(cors());
+app.use(cors({
+  origin:"https://intervyou-frontend.onrender.com" // ✅ Replace with your actual frontend URL
+  credentials: true
+}));
 app.use(express.json());
 
 // ── Routes ──
