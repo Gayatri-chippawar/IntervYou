@@ -32,7 +32,7 @@ global.io = io; // For proctoring sockets
 
 // ── Middlewares ──
 app.use(cors({
-  origin:"https://intervyou-frontend.onrender.com" // ✅ Replace with your actual frontend URL
+  origin:"https://intervyou-frontend.onrender.com",
   credentials: true
 }));
 app.use(express.json());
