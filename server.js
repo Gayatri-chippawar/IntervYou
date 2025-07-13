@@ -62,12 +62,12 @@ if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, '../client/build')));
   
   // Handle SPA routing - must come after static files
-  app.get('*', (req, res) => {
-    if (!req.path.startsWith('/api')) {
-      return res.sendFile(path.join(__dirname, '../client/build', 'index.html'));
-    }
-    res.status(404).json({ message: 'API route not found' });
-  });
+  // app.get('*', (req, res) => {
+  //   if (!req.path.startsWith('/api')) {
+  //     return res.sendFile(path.join(__dirname, '../client/build', 'index.html'));
+  //   }
+  //   res.status(404).json({ message: 'API route not found' });
+  // });
 }
 
 // ── Health check ──
