@@ -59,12 +59,14 @@ if (process.env.NODE_ENV === 'development') {
 // ── Static files and SPA fallback for production ──
 if (process.env.NODE_ENV === 'production') {
   const path = require('path');
-  // Serve static files from React build
   app.use(express.static(path.join(__dirname, '../client/build')));
   
-  // Handle React routing, return all requests to React app
+  // Handle SPA routing - must come after static files
   app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '../client/build', 'index.html'));
+    if (!req.path.startsWith('/api')) {
+      return res.sendFile(path.join(__dirname, '../client/build', 'index.html'));
+    }
+    res.status(404).json({ message: 'API route not found' });
   });
 }
 
