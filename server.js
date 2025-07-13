@@ -22,7 +22,9 @@ async function connectDB() {
 }
 
 // ── Auto-start MongoDB replica-set (if needed locally) ──
-exec('mongosh --eval "rs.initiate()"', () => {});
+if (process.env.NODE_ENV === 'development') {
+  exec('mongosh --eval "rs.initiate()"', () => {});
+}
 
 // ── Express + Socket.IO setup ──
 const app = express();
@@ -32,9 +34,20 @@ global.io = io; // For proctoring sockets
 
 // ── Middlewares ──
 app.use(cors({
-  origin:"https://intervyou-frontend.onrender.com",
+  origin: "https://intervyou-frontend.onrender.com",
   credentials: true
 }));
+
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "https://intervyou-frontend.onrender.com");
+  res.header("Access-Control-Allow-Credentials", "true");
+  res.header("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE");
+  res.header("Access-Control-Allow-Headers", "Content-Type,Authorization");
+  next();
+});
+
+app.use(express.json());
+
 app.use(express.json());
 
 // ── Routes ──
@@ -46,7 +59,6 @@ app.use("/api/tests", require("./routes/testRoutes"));
 app.use("/api/proctor", require("./routes/proctorRoutes"));
 app.use("/api/result", require("./routes/resultRoutes"));
 app.use("/api/file", fileRoutes);
-app.use("/api/document", documentRoutes); // (If used for uploads/downloads)
 
 // ── Health check ──
 app.get("/", (_, res) => res.send("Server running ✅"));
