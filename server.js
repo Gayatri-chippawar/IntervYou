@@ -16,7 +16,7 @@ global.io = io; // For proctoring sockets
 
 // ── Middlewares ──
 app.use(cors({
-  origin: "https://intervyou-frontend.onrender.com",
+  origin: "https://interv-you-frontend.vercel.app",
   credentials: true
 }));
 
