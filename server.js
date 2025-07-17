@@ -16,7 +16,7 @@ global.io = io; // For proctoring sockets
 
 // ── Middlewares ──
 app.use(cors({
-  origin: "https://interv-you-frontend.vercel.app",
+  origin: "https://interv-you-frontend-gayatri-chippawars-projects.vercel.app",
   credentials: true
 }));
 
